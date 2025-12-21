@@ -12,8 +12,8 @@ I was happy to spend half a year in Hong Kong as a visiting student at [HKUST](h
 
 ## 🔬 Research Interests
 
-- 🧊 3D Reconstruction
-- 🎨 Computer Graphics
-- 🎬 Video Generation
+- 🧊 [3D Reconstruction](/archive/?tag=3D%20Reconstruction)
+- 🎨 [Inverse Rendering](/archive/?tag=Inverse%20Rendering)
+- 🎬 [Video Generation](/archive/?tag=Video%20Generation)
 
 

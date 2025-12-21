@@ -21,6 +21,9 @@ const interval = 50;
                 image={entry.data.image}
                 description={entry.data.description}
                 draft={entry.data.draft}
+                author={entry.data.authors || entry.data.author}
+                paper_link={entry.data.paper_link}
+                website={entry.data.website}
                 class:list="onload-animation"
                 style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
         ></PostCard>

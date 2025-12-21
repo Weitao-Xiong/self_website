@@ -1,51 +1,17 @@
 ---
-// CMS 管理页面
+// CMS Admin Page
 ---
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>内容管理</title>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <title>Content Management</title>
   </head>
   <body>
-    <div id="nc-root"></div>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      if (typeof CMS !== 'undefined') {
-        window.CMS_MANUAL_INIT = true;
-        CMS.init({
-          config: {
-            local_backend: true,
-            backend: {
-              name: 'github',
-              repo: 'Weitao-Xiong/self_website',
-              branch: 'main'
-            },
-            media_folder: 'src/assets/images',
-            public_folder: '/src/assets/images',
-            locale: 'zh_Hans',
-            collections: [{
-              name: 'posts',
-              label: '文章',
-              folder: 'src/content/posts',
-              create: true,
-              slug: '{{slug}}',
-              fields: [
-                { label: '标题', name: 'title', widget: 'string' },
-                { label: '发布日期', name: 'published', widget: 'datetime' },
-                { label: '描述', name: 'description', widget: 'text' },
-                { label: '封面图片', name: 'image', widget: 'image', required: false },
-                { label: '标签', name: 'tags', widget: 'list', required: false },
-                { label: '分类', name: 'category', widget: 'string', required: false },
-                { label: '草稿', name: 'draft', widget: 'boolean', default: false },
-                { label: '内容', name: 'body', widget: 'markdown' }
-              ]
-            }]
-          }
-        });
-      }
+      CMS.registerPreviewStyle('/src/styles/main.css');
     </script>
   </body>
 </html>
-

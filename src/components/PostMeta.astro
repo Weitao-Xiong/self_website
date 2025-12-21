@@ -11,29 +11,39 @@ interface Props {
 	updated?: Date;
 	tags: string[];
 	category: string | null;
+	author?: string;
+	paper_link?: string;
+	website?: string;
 	hideTagsForMobile?: boolean;
 	hideUpdateDate?: boolean;
+	hidePublishedDate?: boolean;
 }
 const {
 	published,
 	updated,
 	tags,
 	category,
+	author,
+	paper_link,
+	website,
 	hideTagsForMobile = false,
 	hideUpdateDate = false,
+	hidePublishedDate = false,
 } = Astro.props;
 const className = Astro.props.class;
 ---
 
 <div class:list={["flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2", className]}>
     <!-- publish date -->
-    <div class="flex items-center">
-        <div class="meta-icon"
-        >
-            <Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl"></Icon>
+    {!hidePublishedDate && (
+        <div class="flex items-center">
+            <div class="meta-icon"
+            >
+                <Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(published)}</span>
         </div>
-        <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(published)}</span>
-    </div>
+    )}
 
     <!-- update date -->
     {!hideUpdateDate && updated && updated.getTime() !== published.getTime() && (
@@ -79,4 +89,44 @@ const className = Astro.props.class;
             {!(tags && tags.length > 0) && <div class="transition text-50 text-sm font-medium">{i18n(I18nKey.noTags)}</div>}
         </div>
     </div>
+
+    <!-- author -->
+    {author && (
+        <div class="flex items-center">
+            <div class="meta-icon">
+                <Icon name="material-symbols:person-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <span class="text-50 text-sm font-medium">{author}</span>
+        </div>
+    )}
+
+    <!-- paper link -->
+    {paper_link && (
+        <div class="flex items-center">
+            <div class="meta-icon">
+                <Icon name="material-symbols:article-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <a href={paper_link} target="_blank" rel="noopener noreferrer" 
+               aria-label="View paper"
+               class="link-lg transition text-50 text-sm font-medium
+                            hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
+                Paper
+            </a>
+        </div>
+    )}
+
+    <!-- website -->
+    {website && (
+        <div class="flex items-center">
+            <div class="meta-icon">
+                <Icon name="material-symbols:link-rounded" class="text-xl"></Icon>
+            </div>
+            <a href={website} target="_blank" rel="noopener noreferrer" 
+               aria-label="Visit project website"
+               class="link-lg transition text-50 text-sm font-medium
+                            hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
+                Project Website
+            </a>
+        </div>
+    )}
 </div>

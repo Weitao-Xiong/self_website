@@ -8,21 +8,23 @@ backend:
 media_folder: "src/assets/images"
 public_folder: "/src/assets/images"
 
-locale: 'zh_Hans'
+locale: 'en'
 
 collections:
   - name: "posts"
-    label: "文章"
+    label: "Posts"
     folder: "src/content/posts"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "标题", name: "title", widget: "string" }
-      - { label: "发布日期", name: "published", widget: "datetime" }
-      - { label: "描述", name: "description", widget: "text" }
-      - { label: "封面图片", name: "image", widget: "image", required: false }
-      - { label: "标签", name: "tags", widget: "list", required: false }
-      - { label: "分类", name: "category", widget: "string", required: false }
-      - { label: "草稿", name: "draft", widget: "boolean", default: false }
-      - { label: "内容", name: "body", widget: "markdown" }
-
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Authors", name: "authors", widget: "text", required: false }
+      - { label: "Paper Link", name: "paper_link", widget: "string", required: false, hint: "Link to paper (e.g., arXiv, conference paper URL)" }
+      - { label: "Project Website / Poster URL", name: "website", widget: "string", required: false }
+      - { label: "Published Date", name: "published", widget: "datetime" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "PDF File", name: "pdf", widget: "file", required: false }
+      - { label: "Tags", name: "tags", widget: "select", multiple: true, required: false, options: ["3D Reconstruction", "Inverse Rendering", "Video Generation", "NeurIPS 2025", "arxiv", "under review"] }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Content", name: "body", widget: "markdown" }

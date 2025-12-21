@@ -23,25 +23,48 @@ const isLocal = !(
 	src.startsWith("data:")
 );
 const isPublic = src.startsWith("/");
+const isAssetsPath = src.startsWith("/src/assets/") || src.startsWith("assets/") || src.startsWith("src/assets/");
 
 // TODO temporary workaround for images dynamic import
 // https://github.com/withastro/astro/issues/3373
 // biome-ignore lint/suspicious/noImplicitAnyLet: <check later>
 let img;
-if (isLocal) {
+if (isLocal || isAssetsPath) {
 	const files = import.meta.glob<ImageMetadata>("../../**", {
 		import: "default",
 	});
-	let normalizedPath = path
-		.normalize(path.join("../../", basePath, src))
-		.replace(/\\/g, "/");
-	const file = files[normalizedPath];
+	// Handle different path formats
+	let imageSrc = src;
+	if (src.startsWith("/src/assets/")) {
+		// /src/assets/images/filename.jpg -> assets/images/filename.jpg
+		imageSrc = src.replace("/src/", "");
+	} else if (src.startsWith("src/assets/")) {
+		// src/assets/images/filename.jpg -> assets/images/filename.jpg
+		imageSrc = src.replace("src/", "");
+	} else if (src.startsWith("assets/")) {
+		// assets/images/filename.jpg -> keep as is
+		imageSrc = src;
+	}
+	
+	// Try direct assets path first
+	const directPath = path.normalize(path.join("../../", imageSrc)).replace(/\\/g, "/");
+	let file = files[directPath];
+	
+	// If not found, try with basePath
 	if (!file) {
+		const normalizedPath = path
+			.normalize(path.join("../../", basePath, imageSrc))
+			.replace(/\\/g, "/");
+		file = files[normalizedPath];
+	}
+	
+	if (file) {
+		img = await file();
+	} else {
 		console.error(
-			`\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")}`,
+			`\n[ERROR] Image file not found: ${imageSrc}`,
 		);
 	}
-	img = await file();
 }
 
 const imageClass = "w-full h-full object-cover";
