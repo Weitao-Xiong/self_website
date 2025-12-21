@@ -133,7 +133,7 @@ const jsonLd = {
                         id="post-cover" 
                         src={imagePath} 
                         basePath={basePath} 
-                        class="mb-8 rounded-xl banner-container onload-animation"
+                        class={`mb-8 rounded-xl banner-container onload-animation ${entry.slug === "huprior3r-incorporating-human-priors-for-better-3d-dynamic-reconstruction-from-monocular-videos" ? "max-w-xl mx-auto" : ""}`}
                     />
                 )
             )}
