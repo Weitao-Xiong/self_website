@@ -1,0 +1,47 @@
+---
+// CMS 管理页面
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>内容管理</title>
+  </head>
+  <body>
+    <script is:inline src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script is:inline>
+      CMS.init({
+        config: {
+          local_backend: true,
+          backend: {
+            name: 'github',
+            repo: 'Weitao-Xiong/self_website',
+            branch: 'main'
+          },
+          media_folder: 'src/assets/images',
+          public_folder: '/src/assets/images',
+          locale: 'zh_Hans',
+          collections: [{
+            name: 'posts',
+            label: '文章',
+            folder: 'src/content/posts',
+            create: true,
+            slug: '{{slug}}',
+            fields: [
+              { label: '标题', name: 'title', widget: 'string' },
+              { label: '发布日期', name: 'published', widget: 'datetime' },
+              { label: '描述', name: 'description', widget: 'text' },
+              { label: '封面图片', name: 'image', widget: 'image', required: false },
+              { label: '标签', name: 'tags', widget: 'list', required: false },
+              { label: '分类', name: 'category', widget: 'string', required: false },
+              { label: '草稿', name: 'draft', widget: 'boolean', default: false },
+              { label: '内容', name: 'body', widget: 'markdown' }
+            ]
+          }]
+        }
+      });
+    </script>
+  </body>
+</html>
+

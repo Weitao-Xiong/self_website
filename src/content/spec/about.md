@@ -1,9 +1,17 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+# About me
 
-::github{repo="saicaca/fuwari"}
+I am **Weitao Xiong** 👋
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+🎓 I am a fourth year Undergraduate student at [Xiamen University (Malaysia)](https://en.xmu.edu.cn/). My Final Year Project advisor is [Prof. Hongfei Xue](https://havocfixer.github.io/).
+
+I was happy to spend half a year in Hong Kong as a visiting student at [HKUST](https://hkust.edu.hk/) (March - September 2025), advised by [Prof. Yuan Liu](https://liuyuan-pal.github.io/). HKUST is a beautiful place!
+
+---
+
+## 🔬 Research Interests
+
+- 🧊 3D Reconstruction
+- 🎨 Computer Graphics
+- 🎬 Video Generation
+
+

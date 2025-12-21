@@ -1,0 +1,27 @@
+---
+import { url } from "../../utils/url-utils";
+
+interface Props {
+    class?: string;
+}
+
+const className = Astro.props.class;
+---
+<div class:list={[className, "card-base p-4"]}>
+    <div class="flex items-center gap-2 mb-3">
+        <div class="w-1 h-5 bg-[var(--primary)] rounded-full"></div>
+        <h2 class="font-bold text-lg">关于我</h2>
+    </div>
+    
+    <div class="text-sm text-neutral-600 dark:text-neutral-400 space-y-2">
+        <p>👋 你好！我是一名热爱技术的开发者。</p>
+        <p>🔭 专注于 Web 开发与技术探索。</p>
+        <p>🌱 保持学习，持续成长。</p>
+    </div>
+    
+    <a href={url('/about/')} 
+       class="mt-3 block text-center text-sm text-[var(--primary)] hover:underline">
+        了解更多 →
+    </a>
+</div>
+
