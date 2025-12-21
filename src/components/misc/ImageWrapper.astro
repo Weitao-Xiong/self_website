@@ -16,20 +16,25 @@ import { url } from "../../utils/url-utils";
 const { id, src, alt, position = "center", basePath = "/" } = Astro.props;
 const className = Astro.props.class;
 
+// Check if it's an assets path first (before checking public path)
+const isAssetsPath = src.startsWith("/src/assets/") || src.startsWith("assets/") || src.startsWith("src/assets/");
+// Public paths are paths starting with / but NOT assets paths
+const isPublic = src.startsWith("/") && !isAssetsPath;
+// Local paths are relative paths (not starting with /, http, https, or data:)
+// Assets paths should also be treated as local for processing
 const isLocal = !(
 	src.startsWith("/") ||
 	src.startsWith("http") ||
 	src.startsWith("https") ||
 	src.startsWith("data:")
 );
-const isPublic = src.startsWith("/");
-const isAssetsPath = src.startsWith("/src/assets/") || src.startsWith("assets/") || src.startsWith("src/assets/");
 
 // TODO temporary workaround for images dynamic import
 // https://github.com/withastro/astro/issues/3373
 // biome-ignore lint/suspicious/noImplicitAnyLet: <check later>
 let img;
-if (isLocal || isAssetsPath) {
+// Process assets paths and local relative paths using Astro Image component
+if (isAssetsPath || isLocal) {
 	const files = import.meta.glob<ImageMetadata>("../../**", {
 		import: "default",
 	});
@@ -72,6 +77,6 @@ const imageStyle = `object-position: ${position}`;
 ---
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
-    {isLocal && img && <Image src={img} alt={alt || ""} class={imageClass} style={imageStyle}/>}
-    {!isLocal && <img src={isPublic ? url(src) : src} alt={alt || ""} class={imageClass} style={imageStyle}/>}
+    {(isLocal || isAssetsPath) && img && <Image src={img} alt={alt || ""} class={imageClass} style={imageStyle}/>}
+    {!(isLocal || isAssetsPath) && <img src={isPublic ? url(src) : src} alt={alt || ""} class={imageClass} style={imageStyle}/>}
 </div>

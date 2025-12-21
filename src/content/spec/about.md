@@ -1,6 +1,6 @@
 # About me
 
-I am **Weitao Xiong** 👋
+Hi, I am **Weitao Xiong** 👋
 
 🎓 I am a fourth year Undergraduate student at [Xiamen University (Malaysia)](https://en.xmu.edu.cn/). My Final Year Project advisor is [Prof. Hongfei Xue](https://havocfixer.github.io/).
 
