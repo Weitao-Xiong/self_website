@@ -3,7 +3,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { Image } from "astro:assets";
 
 // 获取 gallery 文件夹中的所有图片
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/gallery/*.{jpeg,jpg,png,webp}');
+const images = import.meta.glob<{ default: ImageMetadata }>('../assets/gallery/*.{jpeg,jpg,png,webp}');
 const imageList = await Promise.all(
   Object.entries(images).map(async ([path, resolver]) => {
     const image = await resolver();
