@@ -3,14 +3,24 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { Image } from "astro:assets";
 
 // 获取 gallery 文件夹中的所有图片
-const images = import.meta.glob<{ default: ImageMetadata }>('../assets/gallery/*.{jpeg,jpg,png,webp}');
+const images = import.meta.glob<ImageMetadata>('../assets/gallery/*.{jpeg,jpg,png,webp}', {
+  import: 'default',
+});
+
 const imageList = await Promise.all(
   Object.entries(images).map(async ([path, resolver]) => {
-    const image = await resolver();
-    const filename = path.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-    return { src: image.default, name: filename };
+    try {
+      const image = await resolver();
+      const filename = path.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+      return { src: image, name: filename };
+    } catch (error) {
+      console.error(`Error loading image ${path}:`, error);
+      return null;
+    }
   })
 );
+// 过滤掉加载失败的图片
+const validImageList = imageList.filter((img): img is { src: ImageMetadata; name: string } => img !== null);
 ---
 
 <MainGridLayout title="Gallery" description="Photos from Hong Kong">
@@ -19,8 +29,8 @@ const imageList = await Promise.all(
     <p class="text-neutral-500 dark:text-neutral-400 mb-6">Photos from my time in Hong Kong 🇭🇰</p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {imageList.length > 0 ? (
-        imageList.map((img) => (
+      {validImageList.length > 0 ? (
+        validImageList.map((img) => (
           <div class="overflow-hidden rounded-xl group cursor-pointer">
             <Image 
               src={img.src} 
