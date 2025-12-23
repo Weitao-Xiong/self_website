@@ -1,26 +1,35 @@
 ---
-import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { Image } from "astro:assets";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 // 获取 gallery 文件夹中的所有图片
-const images = import.meta.glob<ImageMetadata>('../assets/gallery/*.{jpeg,jpg,png,webp}', {
-  import: 'default',
-});
+const images = import.meta.glob<ImageMetadata>(
+	"../assets/gallery/*.{jpeg,jpg,png,webp}",
+	{
+		import: "default",
+	},
+);
 
 const imageList = await Promise.all(
-  Object.entries(images).map(async ([path, resolver]) => {
-    try {
-      const image = await resolver();
-      const filename = path.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-      return { src: image, name: filename };
-    } catch (error) {
-      console.error(`Error loading image ${path}:`, error);
-      return null;
-    }
-  })
+	Object.entries(images).map(async ([path, resolver]) => {
+		try {
+			const image = await resolver();
+			const filename =
+				path
+					.split("/")
+					.pop()
+					?.replace(/\.[^/.]+$/, "") || "";
+			return { src: image, name: filename };
+		} catch (error) {
+			console.error(`Error loading image ${path}:`, error);
+			return null;
+		}
+	}),
 );
 // 过滤掉加载失败的图片
-const validImageList = imageList.filter((img): img is { src: ImageMetadata; name: string } => img !== null);
+const validImageList = imageList.filter(
+	(img): img is { src: ImageMetadata; name: string } => img !== null,
+);
 ---
 
 <MainGridLayout title="Gallery" description="Photos from Hong Kong">

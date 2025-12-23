@@ -17,7 +17,10 @@ const { id, src, alt, position = "center", basePath = "/" } = Astro.props;
 const className = Astro.props.class;
 
 // Check if it's an assets path first (before checking public path)
-const isAssetsPath = src.startsWith("/src/assets/") || src.startsWith("assets/") || src.startsWith("src/assets/");
+const isAssetsPath =
+	src.startsWith("/src/assets/") ||
+	src.startsWith("assets/") ||
+	src.startsWith("src/assets/");
 // Public paths are paths starting with / but NOT assets paths
 const isPublic = src.startsWith("/") && !isAssetsPath;
 // Local paths are relative paths (not starting with /, http, https, or data:)
@@ -50,11 +53,13 @@ if (isAssetsPath || isLocal) {
 		// assets/images/filename.jpg -> keep as is
 		imageSrc = src;
 	}
-	
+
 	// Try direct assets path first
-	const directPath = path.normalize(path.join("../../", imageSrc)).replace(/\\/g, "/");
+	const directPath = path
+		.normalize(path.join("../../", imageSrc))
+		.replace(/\\/g, "/");
 	let file = files[directPath];
-	
+
 	// If not found, try with basePath
 	if (!file) {
 		const normalizedPath = path
@@ -62,13 +67,11 @@ if (isAssetsPath || isLocal) {
 			.replace(/\\/g, "/");
 		file = files[normalizedPath];
 	}
-	
+
 	if (file) {
 		img = await file();
 	} else {
-		console.error(
-			`\n[ERROR] Image file not found: ${imageSrc}`,
-		);
+		console.error(`\n[ERROR] Image file not found: ${imageSrc}`);
 	}
 }
 

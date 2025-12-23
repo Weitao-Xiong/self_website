@@ -7,8 +7,10 @@ import WidgetLayout from "./WidgetLayout.astro";
 
 const allCategories = await getCategoryList();
 // 过滤掉不需要的分类
-const excludeCategories = ['blogging', 'Customization', 'Fuwari'];
-const categories = allCategories.filter(c => !excludeCategories.includes(c.name));
+const excludeCategories = ["blogging", "Customization", "Fuwari"];
+const categories = allCategories.filter(
+	(c) => !excludeCategories.includes(c.name),
+);
 
 const COLLAPSED_HEIGHT = "7.5rem";
 const COLLAPSE_THRESHOLD = 5;

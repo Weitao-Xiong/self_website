@@ -29,10 +29,14 @@ const { remarkPluginFrontmatter } = await entry.render();
 
 // Check if cover is PDF
 const imagePath = entry.data.image || "";
-const isPdf = imagePath.toLowerCase().endsWith('.pdf');
+const isPdf = imagePath.toLowerCase().endsWith(".pdf");
 const basePath = path.join("content/posts/", getDir(entry.id));
 // If PDF is in assets folder, use /src/assets/ path, otherwise use relative path
-const fullPath = isPdf ? (imagePath.startsWith('/') ? imagePath : `/src/assets/${imagePath}`) : "";
+const fullPath = isPdf
+	? imagePath.startsWith("/")
+		? imagePath
+		: `/src/assets/${imagePath}`
+	: "";
 
 const jsonLd = {
 	"@context": "https://schema.org",
